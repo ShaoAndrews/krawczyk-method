@@ -1,0 +1,3 @@
+/home/shaowb/krawczyk-method/build/CMakeFiles/rebuild_cache.dir
+/home/shaowb/krawczyk-method/build/CMakeFiles/krawczyk-method.dir
+/home/shaowb/krawczyk-method/build/CMakeFiles/edit_cache.dir

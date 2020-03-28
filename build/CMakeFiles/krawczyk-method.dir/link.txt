@@ -1,0 +1,1 @@
+g++   -g  -rdynamic CMakeFiles/krawczyk-method.dir/src/ExCoefficients.cpp.o CMakeFiles/krawczyk-method.dir/src/Global.cpp.o CMakeFiles/krawczyk-method.dir/src/Region.cpp.o CMakeFiles/krawczyk-method.dir/src/main.cpp.o CMakeFiles/krawczyk-method.dir/src/quadtree.cpp.o  -o ../bin/krawczyk-method 
