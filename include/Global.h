@@ -39,3 +39,14 @@ extern double connected_time;
 #else 
 #define PRINTLIST(var)
 #endif
+
+
+
+
+#ifdef DEBUG
+#define ITERATIONINFO(index, variable) do{\
+    std::cout << "["<< index << "]: "<<variable<<std::endl;\
+}while(0)
+#else
+#define ITERATIONINFO(var)
+#endif

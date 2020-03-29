@@ -87,11 +87,7 @@ class IntervalVec
     //输出到控制台
     friend std::ostream &operator<<(std::ostream &out, IntervalVec &c)
     {
-        out << "{"
-            << "\n"
-            << "\t" << c.x << "\n"
-            << "\t" << c.y << "\n"
-            << "}" << std::endl;
+        out << " "<<c.x << "*"<< c.y;
     }
     //实数矩阵与该区间向量相乘
     friend IntervalVec operator*(const Region &region, const IntervalVec &c)

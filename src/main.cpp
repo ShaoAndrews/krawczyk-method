@@ -113,7 +113,5 @@ int main(int argc, char *argv[])
         solver->search_procedure(range);
         delete solver;
         solver = nullptr;
-
-
     }
 }

@@ -22,6 +22,7 @@ CMakeFiles/krawczyk-method.dir/src/Global.cpp.o: ../src/Global.cpp
 CMakeFiles/krawczyk-method.dir/src/Region.cpp.o: ../include/Region.h
 CMakeFiles/krawczyk-method.dir/src/Region.cpp.o: ../src/Region.cpp
 
+CMakeFiles/krawczyk-method.dir/src/main.cpp.o: ../include/Global.h
 CMakeFiles/krawczyk-method.dir/src/main.cpp.o: ../include/IntervalVec.hpp
 CMakeFiles/krawczyk-method.dir/src/main.cpp.o: ../include/Node.hpp
 CMakeFiles/krawczyk-method.dir/src/main.cpp.o: ../include/Region.h
@@ -38,6 +39,7 @@ CMakeFiles/krawczyk-method.dir/src/main.cpp.o: ../include/kv/rdouble.hpp
 CMakeFiles/krawczyk-method.dir/src/main.cpp.o: ../include/quadtree.h
 CMakeFiles/krawczyk-method.dir/src/main.cpp.o: ../src/main.cpp
 
+CMakeFiles/krawczyk-method.dir/src/quadtree.cpp.o: ../include/Global.h
 CMakeFiles/krawczyk-method.dir/src/quadtree.cpp.o: ../include/IntervalVec.hpp
 CMakeFiles/krawczyk-method.dir/src/quadtree.cpp.o: ../include/Node.hpp
 CMakeFiles/krawczyk-method.dir/src/quadtree.cpp.o: ../include/Region.h

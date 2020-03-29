@@ -165,6 +165,8 @@ vector
 -
 cmath
 -
+Global.h
+../include/Global.h
 
 /home/shaowb/krawczyk-method/src/ExCoefficients.cpp
 ExCoefficients.h

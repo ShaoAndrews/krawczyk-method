@@ -24,17 +24,14 @@ void quadtree::search_procedure(IntervalVec<itv> range)
 {
     IntervalVec<itv> *current = nullptr;
     //清空Tlist
-    while (!Tlist.empty())
-    {
-        current = Tlist.front();
-        delete current;
-        current = nullptr;
-        Tlist.pop();
-    }
+    clear_Tlist();
     Plist.clear();
     current = new IntervalVec<itv>(range);
+    int index_number = 0;
     while (1)
     {
+        index_number++;
+        ITERATIONINFO(index_number, *current);
         IntervalVec<itv> F_X = F_value(current->x, current->y);
         if (!F_X.contain_zero())
         {
@@ -69,7 +66,7 @@ void quadtree::search_procedure(IntervalVec<itv> range)
                     {
                         break;
                     }
-                    current = Tlist.front();
+                    current = Tlist.front(); //修改
                     Tlist.pop();
                 }
                 else if (K.is_contained_in(*current))
@@ -79,13 +76,7 @@ void quadtree::search_procedure(IntervalVec<itv> range)
                         std::cout << *current << std::endl;
                         delete current;
                         current = nullptr;
-                        while (!Tlist.empty())
-                        {
-                            current = Tlist.front();
-                            delete current;
-                            current = nullptr;
-                            Tlist.pop();
-                        }
+                        clear_Tlist();
 
                         break;
                     }
@@ -94,26 +85,27 @@ void quadtree::search_procedure(IntervalVec<itv> range)
                         delete current;
                         current = nullptr;
                         search_procedure(K);
-
-                        while (!Tlist.empty())
-                        {
-                            current = Tlist.front();
-                            delete current;
-                            current = nullptr;
-                            Tlist.pop();
-                        }
-
+                        clear_Tlist();
                         break;
                     }
                 }
                 else
                 {
-                    Bisection(current, F_prime_value_result);
+                    if (!Bisection(current, F_prime_value_result))
+                    {
+                        clear_Tlist();
+                        break;
+                    };
                 }
             }
             else
             {
-                Bisection(current, F_prime_value_result);
+
+                if (!Bisection(current, F_prime_value_result))
+                {
+                    clear_Tlist();
+                    break;
+                };
             }
         }
     }
@@ -190,6 +182,18 @@ void quadtree::search_procedure(IntervalVec<itv> range)
     // }
 }
 
+void quadtree::clear_Tlist()
+{
+    IntervalVec<itv> *current = nullptr;
+    while (!Tlist.empty())
+    {
+        current = Tlist.front();
+        Tlist.pop();
+        delete current;
+        current = nullptr;
+    }
+}
+
 itv quadtree::estimate_range(const Eigen::MatrixXd &src, const itv &xrange, const itv &yrange)
 {
     itv result(0, 0);
@@ -257,14 +261,14 @@ Eigen::MatrixXd quadtree::diff_about_y(const Eigen::MatrixXd &src)
     return result;
 }
 
-void quadtree::Bisection(IntervalVec<itv> *p, const IntervalMat<itv> &Fprime)
+bool quadtree::Bisection(IntervalVec<itv> *&p, const IntervalMat<itv> &Fprime)
 {
-    if (width(p->x) < m_min_size && width(p->y) < m_min_size)
+    if (width(p->x) < m_min_size || width(p->y) < m_min_size)
     {
         Plist.push_back(*p);
         delete p;
         p = nullptr;
-        return;
+        return false;
     }
     std::pair<int, int> index = Fprime.find_mini_ij();
 
@@ -322,19 +326,17 @@ void quadtree::Bisection(IntervalVec<itv> *p, const IntervalMat<itv> &Fprime)
         IntervalVec<itv> F_range2 = F_value(first_try2->x, first_try2->y);
         double temp1 = fabs(mid(F_range1.x)) + fabs(mid(F_range1.y));
         double temp2 = fabs(mid(F_range2.x)) + fabs(mid(F_range2.y));
-        if (temp1 > temp2)
+        if (temp1 <= temp2)
         {
             delete p;
-            p = nullptr;
-            p = first_try2;
-            Tlist.push(first_try1);
+            p = first_try1;
+            Tlist.push(first_try2);
         }
         else
         {
             delete p;
-            p = nullptr;
-            p = first_try1;
-            Tlist.push(first_try2);
+            p = first_try2;
+            Tlist.push(first_try1);
         }
         delete second_try1;
         delete second_try2;
@@ -348,23 +350,23 @@ void quadtree::Bisection(IntervalVec<itv> *p, const IntervalMat<itv> &Fprime)
         IntervalVec<itv> F_range2 = F_value(second_try2->x, second_try2->y);
         double temp1 = fabs(mid(F_range1.x)) + fabs(mid(F_range1.y));
         double temp2 = fabs(mid(F_range2.x)) + fabs(mid(F_range2.y));
-        if (temp1 > temp2)
+        if (temp1 <= temp2)
         {
             delete p;
-            p = nullptr;
-            p = second_try2;
-            Tlist.push(second_try1);
+            p = second_try1;
+            Tlist.push(second_try2);
         }
         else
         {
             delete p;
-            p = nullptr;
-            p = second_try1;
-            Tlist.push(second_try2);
+            p = second_try2;
+            Tlist.push(second_try1);
         }
         delete first_try1;
         delete first_try2;
         first_try1 = nullptr;
         first_try2 = nullptr;
     }
+    count ++;
+    return true;
 }
